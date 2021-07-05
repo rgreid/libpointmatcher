@@ -201,6 +201,13 @@ typename PointMatcher<T>::Matrix PointMatcher<T>::ICPChainBase::getPointMatchDis
 	return pointMatchDists;
 }
 
+//! Return a matrix with the x,y,z distances to the closest matching point, using pointer to class variable
+template<typename T>
+typename PointMatcher<T>::Matrix* PointMatcher<T>::ICPChainBase::getPointMatchDists_pointer()
+{
+	return &matches_class.dists;
+}
+
 //! Instantiate modules if their names are in the YAML file
 template<typename T>
 template<typename R>
@@ -399,6 +406,7 @@ typename PointMatcher<T>::TransformationParameters PointMatcher<T>::ICP::compute
 		const Matches matches(
 			this->matcher->findClosests(stepReading)
 		);
+		this->matches_class = matches;
 		
 		//-----------------------------
 		// Detect outliers

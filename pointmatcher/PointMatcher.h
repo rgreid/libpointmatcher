@@ -673,6 +673,7 @@ struct PointMatcher
 		bool getMaxNumIterationsReached() const;
 		int getNumIters() const;
 		Matrix getPointMatchDists() const;
+		Matrix* getPointMatchDists_pointer();
 		
 	protected:
 		unsigned prefilteredReadingPtsCount; //!< remaining number of points after prefiltering but before the iterative process
@@ -680,6 +681,7 @@ struct PointMatcher
 		bool maxNumIterationsReached; //!< store if we reached the maximum number of iterations last time compute was called
 		int icpNumIters; //!< number of iterations run last time compute was called
 		Matrix pointMatchDists;  //!< Squared distances to closest points, dense matrix of ScalarType
+		Matches matches_class;
 
 		ICPChainBase();
 		
