@@ -187,25 +187,11 @@ bool PointMatcher<T>::ICPChainBase::getMaxNumIterationsReached() const
 	return maxNumIterationsReached;
 }
 
-//! Return number of iterations run in the last iterative process
-template<typename T>
-int PointMatcher<T>::ICPChainBase::getNumIters() const
-{
-	return icpNumIters;
-}
-
 //! Return a matrix with the x,y,z distances to the closest matching point
 template<typename T>
 typename PointMatcher<T>::Matrix PointMatcher<T>::ICPChainBase::getPointMatchDists() const
 {
 	return pointMatchDists;
-}
-
-//! Return a matrix with the x,y,z distances to the closest matching point, using pointer to class variable
-template<typename T>
-typename PointMatcher<T>::Matrix* PointMatcher<T>::ICPChainBase::getPointMatchDists_pointer()
-{
-	return &matches_class.dists;
 }
 
 //! Instantiate modules if their names are in the YAML file
@@ -406,7 +392,6 @@ typename PointMatcher<T>::TransformationParameters PointMatcher<T>::ICP::compute
 		const Matches matches(
 			this->matcher->findClosests(stepReading)
 		);
-		this->matches_class = matches;
 		
 		//-----------------------------
 		// Detect outliers
@@ -450,7 +435,6 @@ typename PointMatcher<T>::TransformationParameters PointMatcher<T>::ICP::compute
 		++iterationCount;
 	}
 	
-	this->icpNumIters = iterationCount;
 	this->inspector->addStat("IterationsCount", iterationCount);
 	this->inspector->addStat("PointCountTouched", this->matcher->getVisitCount());
 	this->matcher->resetVisitCount();
